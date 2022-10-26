@@ -4,24 +4,23 @@ plugins {
     id 'idea'
     id 'eclipse'
 
-    id 'com.github.hierynomus.license' version '0.11.0'
-    id 'com.github.johnrengelman.shadow' version '1.2.2'
+    id 'com.github.hierynomus.license' version '0.16.1'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 defaultTasks 'clean', 'licenseFormat'
 
 group 'uk.jamierocks'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile 'com.google.guava:guava:18.0'
-    compile 'com.beust:jcommander:1.48'
+    implementation 'com.google.guava:guava:18.0'
+    implementation 'com.beust:jcommander:1.48'
 }
 
 processResources {
@@ -45,7 +44,7 @@ shadowJar {
 }
 
 license {
-    header file('HEADER.txt')
+    header rootProject.file('HEADER.txt')
     include '**/*.java'
     include '**/*.groovy'
 
@@ -57,8 +56,4 @@ license {
 
 artifacts {
     archives shadowJar
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.10'
 }
