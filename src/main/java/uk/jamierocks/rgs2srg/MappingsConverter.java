@@ -49,6 +49,10 @@ public class MappingsConverter {
     private List<String> fieldLines = Lists.newArrayList();
     private List<String> methodLines = Lists.newArrayList();
 
+    private String clientPkg = "net/minecraft/client";
+    private String isomPkg = "net/minecraft/isom";
+
+
     public MappingsConverter(File input, File output) {
         this.input = input;
         this.output = output;
@@ -157,7 +161,12 @@ public class MappingsConverter {
     private String getModifiedMapping(String originalMapping, String newMapping) {
         String[] split = originalMapping.split("/");
 
-        String className = originalMapping.substring(0, split[split.length - 1].length());
+        if(originalMapping.contains(clientPkg) || originalMapping.contains(isomPkg)) {
+            String className = originalMapping.substring(0, (originalMapping.lastIndexOf(split[4]) - 1));
+            return className + "/" + newMapping;
+        }
+
+        String className = originalMapping.substring(0, split[0].length());
         if (this.obfMappings.containsKey(className)) {
             className = this.obfMappings.get(className);
         }

@@ -23,6 +23,10 @@ dependencies {
     implementation 'com.beust:jcommander:1.48'
 }
 
+ext {
+    DIR_RESOURCES = "$project.projectDir\\src\\main\\resources"
+}
+
 processResources {
     from 'LICENSE.txt'
 }
@@ -56,4 +60,10 @@ license {
 
 artifacts {
     archives shadowJar
+}
+
+task testConversion(type: JavaExec) {
+    main = "uk.jamierocks.rgs2srg.Main"
+    classpath = sourceSets.main.runtimeClasspath
+    args("-i", "${DIR_RESOURCES}\\minecraft.rgs", "-o", "${DIR_RESOURCES}\\a1.2.6.srg")
 }
